@@ -1,88 +1,40 @@
-import 'dart:io';
-
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'screens/welcome_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/registration_screen.dart';
+import 'screens/add_expense_screen.dart';
 
-import 'details.dart';
+void main() => runApp(ExpenseApp());
 
-main() async {
-  runApp(MaterialApp(home: MyApp()));
-}
-
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  String _text = '';
-  PickedFile _image;
-  final picker = ImagePicker();
-
+class ExpenseApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Text Recognition'),
-          actions: [
-            FlatButton(
-              onPressed: scanText,
-              child: Text(
-                'Scan',
-                style: TextStyle(color: Colors.white),
-              ),
-            )
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: getImage,
-          child: Icon(Icons.add_a_photo),
-        ),
-        body: Container(
-          height: double.infinity,
-          width: double.infinity,
-          child: _image != null
-              ? Image.file(
-                  File(_image.path),
-                  fit: BoxFit.fitWidth,
-                )
-              : Container(),
-        ));
-  }
+    return FutureBuilder(
+      // Initialize FlutterFire
+      future: Firebase.initializeApp(),
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          return Text("Error!");
+        }
 
-  Future scanText() async {
-    showDialog(
-        context: context,
-        child: Center(
-          child: CircularProgressIndicator(),
-        ));
-    final FirebaseVisionImage visionImage =
-        FirebaseVisionImage.fromFile(File(_image.path));
-    final TextRecognizer textRecognizer =
-        FirebaseVision.instance.textRecognizer();
-    final VisionText visionText =
-        await textRecognizer.processImage(visionImage);
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            initialRoute: WelcomeScreen.id,
+            routes: {
+              WelcomeScreen.id: (context) => WelcomeScreen(),
+              LoginScreen.id: (context) => LoginScreen(),
+              RegistrationScreen.id: (context) => RegistrationScreen(),
+              AddExpenseScreen.id: (context) => AddExpenseScreen(),
+            },
+          );
+        }
 
-    for (TextBlock block in visionText.blocks) {
-      for (TextLine line in block.lines) {
-        _text += line.text + '\n';
-      }
-    }
-
-    Navigator.of(context).pop();
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => Details(_text)));
-  }
-
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        _image = pickedFile;
-      } else {
-        print('No image selected');
-      }
-    });
+        // Otherwise, show something whilst waiting for initialization to complete
+        return Center(child: CircularProgressIndicator());
+      },
+    );
   }
 }

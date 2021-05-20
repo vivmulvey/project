@@ -16,13 +16,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.pink[500],
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            Row(
+              children: <Widget>[
+                Text(
+                  'Register',
+                  style: TextStyle(
+                    fontSize: 45.0,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
             Container(
               height: 200.0,
               //Logo
@@ -38,19 +50,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 email = value;
               },
               decoration: InputDecoration(
-                hintText: 'Enter your email',
+                hintText: 'Email',
+                hintStyle: TextStyle(
+                  color: Colors.white,
+                ),
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderSide: BorderSide(color: Colors.white, width: 2.0),
+                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
                 ),
               ),
             ),
@@ -65,19 +80,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 password = value;
               },
               decoration: InputDecoration(
-                hintText: 'Enter your password',
+                hintText: 'Password',
+                hintStyle: TextStyle(
+                  color: Colors.white,
+                ),
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 1.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderSide: BorderSide(color: Colors.white, width: 1.0),
+                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
-                  borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                  borderSide: BorderSide(color: Colors.white, width: 2.0),
+                  borderRadius: BorderRadius.all(Radius.circular(0.0)),
                 ),
               ),
             ),
@@ -87,8 +105,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(0.0)),
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () async {
@@ -111,7 +129,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   height: 42.0,
                   child: Text(
                     'Register',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.grey),
                   ),
                 ),
               ),

@@ -1,4 +1,4 @@
-import 'package:clipboard/clipboard.dart';
+
 import 'package:flutter/material.dart';
 
 class Details extends StatefulWidget {
@@ -17,17 +17,8 @@ class _DetailsState extends State<Details> {
     return Scaffold(
       key: _key,
       appBar: AppBar(
-        title: Text('Details'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.copy),
-            onPressed: () {
-              FlutterClipboard.copy(widget.text).then((value) => _key
-                  .currentState
-                  .showSnackBar(new SnackBar(content: Text('Copied'))));
-            },
-          )
-        ],
+        backgroundColor: Colors.indigo[900],
+        title: Text('Receipt Details'),
       ),
       body: Container(
           padding: EdgeInsets.all(8),
@@ -37,9 +28,16 @@ class _DetailsState extends State<Details> {
           child: Column(children: [
             for (var k in widget.parsedData.keys)
               Text('$k ${widget.parsedData[k]}'),
-            SelectableText(
-                widget.text.isEmpty ? 'No Text Available' : widget.text),
-          ])),
+
+            ElevatedButton(
+              child: const Text("Save"),
+              onPressed: () => {
+                print("save");
+              }
+            )
+            // SelectableText(
+            //     widget.text.isEmpty ? 'No Text Available' : widget.text),
+          ],)),
     );
   }
 }

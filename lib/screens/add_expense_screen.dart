@@ -116,7 +116,8 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Text Recognition'),
+        backgroundColor: Colors.indigo[900],
+        title: Text('Add Expense'),
         actions: <Widget>[
           FlatButton(
             onPressed: scanText,
@@ -141,6 +142,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: getImage,
         child: Icon(Icons.add_a_photo),
+        backgroundColor: Colors.indigo[900],
       ),
       body: Container(
         height: double.infinity,
@@ -170,7 +172,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
     // print(visionText.blocks);
     // var i = 0;
-    setState(() => {parsedData["Vendor"] = visionText.blocks[0].text});
+    setState(() => {parsedData["Vendor:"] = visionText.blocks[0].text});
     checkStringForDate(visionText.blocks[6].text);
     // setState(() => {parsedData["Vendor"] = visionText.blocks[6].text});
     for (var i = 0; i < visionText.blocks.length; i++) {
@@ -201,7 +203,6 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
     Navigator.of(context).pop();
     Navigator.of(context).push(
         MaterialPageRoute(builder: (context) => Details(_text, parsedData)));
-        
   }
 
   Future getImage() async {

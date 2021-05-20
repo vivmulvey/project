@@ -12,7 +12,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.indigo[900],
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
@@ -25,23 +25,24 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     //Logo
                     ),
                 Text(
-                  'Welcome',
+                  'Expendy',
                   style: TextStyle(
                     fontSize: 45.0,
                     fontWeight: FontWeight.w900,
+                    color: Colors.white,
                   ),
                 ),
               ],
             ),
             SizedBox(
-              height: 48.0,
+              height: 30.0,
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
                 elevation: 5.0,
-                color: Colors.lightBlueAccent,
-                borderRadius: BorderRadius.circular(30.0),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(0.0),
                 child: MaterialButton(
                   onPressed: () {
                     Navigator.pushNamed(context, LoginScreen.id);
@@ -49,7 +50,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   minWidth: 200.0,
                   height: 42.0,
                   child: Text(
-                    'Log In',
+                    'Login',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
               ),
@@ -57,8 +62,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.circular(30.0),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(0.0),
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () {
@@ -68,6 +73,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   height: 42.0,
                   child: Text(
                     'Register',
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.grey,
+                    ),
                   ),
                 ),
               ),
