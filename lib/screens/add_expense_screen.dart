@@ -158,11 +158,14 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
   }
 
   Future scanText() async {
-    showDialog(
-        context: context,
-        child: Center(
-          child: CircularProgressIndicator(),
-        ));
+    // showDialog(
+    //     context: context,
+    //     builder: (BuildContext context) {
+
+    //     }
+    //     child: Center(
+    //       child: CircularProgressIndicator(),
+    //     ));
     final FirebaseVisionImage visionImage =
         FirebaseVisionImage.fromFile(File(_image.path));
     final TextRecognizer textRecognizer =
@@ -172,7 +175,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
     // print(visionText.blocks);
     // var i = 0;
-    setState(() => {parsedData["Vendor:"] = visionText.blocks[0].text});
+    setState(() => {parsedData["Vendor"] = visionText.blocks[0].text});
     checkStringForDate(visionText.blocks[6].text);
     // setState(() => {parsedData["Vendor"] = visionText.blocks[6].text});
     for (var i = 0; i < visionText.blocks.length; i++) {

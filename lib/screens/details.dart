@@ -1,4 +1,5 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Details extends StatefulWidget {
@@ -12,6 +13,9 @@ class Details extends StatefulWidget {
 
 class _DetailsState extends State<Details> {
   final GlobalKey<ScaffoldState> _key = new GlobalKey<ScaffoldState>();
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,19 +29,26 @@ class _DetailsState extends State<Details> {
           alignment: Alignment.center,
           height: double.infinity,
           width: double.infinity,
-          child: Column(children: [
-            for (var k in widget.parsedData.keys)
-              Text('$k ${widget.parsedData[k]}'),
+          child: Column(
+            children: [
+              for (var k in widget.parsedData.keys)
+                Text('$k: ${widget.parsedData[k]}'),
 
-            ElevatedButton(
-              child: const Text("Save"),
-              onPressed: () => {
-                print("save");
-              }
-            )
-            // SelectableText(
-            //     widget.text.isEmpty ? 'No Text Available' : widget.text),
-          ],)),
+              ElevatedButton(
+                  child: const Text("Save"),
+                  onPressed: () => {
+                        print("save"),
+                        _firestore.collection('expenses').add({
+                          "date": widget.parsedData["Date"],
+                          "vendor": widget.parsedData["Vendor"],
+                          "total": widget.parsedData["Total"],
+                          "email": _auth.currentUser.email
+                        })
+                      })
+              // SelectableText(
+              //     widget.text.isEmpty ? 'No Text Available' : widget.text),
+            ],
+          )),
     );
   }
 }
