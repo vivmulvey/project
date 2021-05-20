@@ -20,37 +20,64 @@ class _ViewExpensesState extends State<ViewExpenses> {
     CollectionReference expenses =
         FirebaseFirestore.instance.collection('expenses');
 
-    return FutureBuilder<DocumentSnapshot>(
-      future: expenses.doc().get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
+    return Scaffold(
+      key: _key,
+      appBar: AppBar(
+        backgroundColor: Colors.indigo[900],
+        title: Text('Expenses'),
+      ),
+      body: FutureBuilder<DocumentSnapshot>(
+        future: expenses.doc().get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text("Something went wrong");
+          }
 
-        if (snapshot.hasData && !snapshot.data.exists) {
-          return Text("Document does not exist");
-        }
+          if (snapshot.hasData && !snapshot.data.exists) {
+            return Text("Document does not exist");
+          }
 
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data.data();
-          return Text("${data['vendor']} - ${data['price']}");
-        }
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data = snapshot.data.data();
+            return Text("${data['vendor']} - ${data['price']}");
+          }
 
-        return Text("loading");
-      },
+          return Text("loading");
+        },
+      ),
     );
+    // return FutureBuilder<DocumentSnapshot>(
+    //   future: expenses.doc().get(),
+    //   builder:
+    //       (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+    //     if (snapshot.hasError) {
+    //       return Text("Something went wrong");
+    //     }
+
+    //     if (snapshot.hasData && !snapshot.data.exists) {
+    //       return Text("Document does not exist");
+    //     }
+
+    //     if (snapshot.connectionState == ConnectionState.done) {
+    //       Map<String, dynamic> data = snapshot.data.data();
+    //       return Text("${data['vendor']} - ${data['price']}");
+    //     }
+
+    //     return Text("loading");
+    //   },
+    // );
   }
 
   // @override
   // Widget build(BuildContext context) {
 
-  //   return Scaffold(
-  //       key: _key,
-  //       appBar: AppBar(
-  //         backgroundColor: Colors.indigo[900],
-  //         title: Text('Expenses'),
-  //       ),
+  // return Scaffold(
+  //     key: _key,
+  //     appBar: AppBar(
+  //       backgroundColor: Colors.indigo[900],
+  //       title: Text('Expenses'),
+  //     ),
   //       body: snapshot.docs.length > 0 ? ListView(children: [
   //         for (var item in snapshot.docs) {
   //           ListTile(title: "${item['vendor']} - ${item['price']}", subtitle: item['email'],)
