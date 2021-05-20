@@ -17,8 +17,11 @@ class _ViewExpensesState extends State<ViewExpenses> {
 // var items = _firestore.collection('expenses').get()
   @override
   Widget build(BuildContext context) {
-    CollectionReference expenses =
-        FirebaseFirestore.instance.collection('expenses');
+    // CollectionReference expenses =
+    //     FirebaseFirestore.instance.collection('expenses');
+
+    final Stream<QuerySnapshot> _expensesStream =
+        FirebaseFirestore.instance.collection('expenses').snapshots();
 
     return Scaffold(
       key: _key,
@@ -26,24 +29,33 @@ class _ViewExpensesState extends State<ViewExpenses> {
         backgroundColor: Colors.indigo[900],
         title: Text('Expenses'),
       ),
-      body: FutureBuilder<DocumentSnapshot>(
-        future: expenses.doc().get(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+      body: StreamBuilder<QuerySnapshot>(
+        stream: _expensesStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text("Something went wrong");
+            return Text('Something went wrong');
           }
 
-          if (snapshot.hasData && !snapshot.data.exists) {
-            return Text("Document does not exist");
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
           }
 
-          if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> data = snapshot.data.data();
-            return Text("${data['vendor']} - ${data['price']}");
-          }
+          return new ListView(
+            children: snapshot.data.docs.map((DocumentSnapshot document) {
+              return new ListTile(
+                title: new Text(document.data()['vendor'] +
+                    " - " +
+                    document.data()['total']),
+                subtitle: new Text(document.data()['email']),
+              );
+            }).toList(),
+          );
+          // if (snapshot.connectionState == ConnectionState.done) {
+          //   Map<String, dynamic> data = snapshot.data.data();
+          //   return Text("${data['vendor']} - ${data['price']}");
+          // }
 
-          return Text("loading");
+          // return Text("loading");
         },
       ),
     );
