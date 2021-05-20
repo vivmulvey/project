@@ -17,8 +17,8 @@ class _ViewExpensesState extends State<ViewExpenses> {
 // var items = _firestore.collection('expenses').get()
   @override
   Widget build(BuildContext context) {
-    // CollectionReference expenses =
-    //     FirebaseFirestore.instance.collection('expenses');
+    CollectionReference expenses =
+        FirebaseFirestore.instance.collection('expenses');
 
     final Stream<QuerySnapshot> _expensesStream =
         FirebaseFirestore.instance.collection('expenses').snapshots();
@@ -47,6 +47,15 @@ class _ViewExpensesState extends State<ViewExpenses> {
                     " - " +
                     document.data()['total']),
                 subtitle: new Text(document.data()['email']),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () async {
+                    expenses
+                        .doc(document.id)
+                        .delete()
+                        .then((value) => print("deleted!"));
+                  },
+                ),
               );
             }).toList(),
           );
